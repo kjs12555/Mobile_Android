@@ -1,4 +1,4 @@
-package com.example.user.myapplication;
+package kr.ac.kookmin.cs.quickcoding_android02;
 
 import org.junit.Test;
 
