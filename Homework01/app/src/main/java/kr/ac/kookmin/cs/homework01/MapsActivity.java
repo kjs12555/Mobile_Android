@@ -73,8 +73,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 double x=location.getLatitude(),y=location.getLongitude();
                 db.execSQL(s,new Object[]{x,y});
                 save.add(new LatLng(x,y));
-                new MapsActivity().drawPolyline();
-                mMap.addCircle(new CircleOptions().center(new LatLng(x,y)).radius(1000).strokeColor(Color.RED).fillColor(Color.BLUE));
+                drawPolyline();
+                mMap.addCircle(new CircleOptions().center(new LatLng(x,y)).radius(10).strokeColor(Color.RED).fillColor(Color.BLUE));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(x,y)));
             }
             public void onProviderDisabled(String provider) {}
@@ -82,8 +82,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onStatusChanged(String provider, int status, Bundle extras) {}
         };
         try{
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,60000,10,mLocationListener);
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,10,mLocationListener);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,10,mLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 6000,10,mLocationListener);   //네트워크 제공자는 데이터가 안되서 사용을 못했습니다. 데이터를 사용해서 정확도는 떨어지지만 실내에서도 사용 가능하다는 점이 장점.
         }catch(SecurityException ex){}
 
         if(save.size()!=0){
@@ -92,6 +92,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.610215, 126.997202)));
         }
         Toast.makeText(this, "DB에 있는 정보의 수 : "+Integer.toString(save.size()), Toast.LENGTH_SHORT).show();
-        mMap.setMinZoomPreference(13);
+        //mMap.setMinZoomPreference(13);
     }
 }
