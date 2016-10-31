@@ -72,25 +72,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else{
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.610215, 126.997202)));
         }
+
         Toast.makeText(this, "DB에 있는 정보의 수 : "+Integer.toString(save.size()), Toast.LENGTH_SHORT).show();
+
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        final LocationListener mLocationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                String s = "INSERT INTO Location (X, Y) VALUES(?,?);";
-                double x=location.getLatitude(),y=location.getLongitude();
-                db.execSQL(s,new Object[]{x,y});
-                save.add(new LatLng(x,y));
-                new MapsActivity().drawPolyline();
-                mMap.addCircle(new CircleOptions().center(new LatLng(x,y)).radius(1000).strokeColor(Color.RED).fillColor(Color.BLUE));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(x,y)));
-            }
-            public void onProviderDisabled(String provider) {}
-            public void onProviderEnabled(String provider) {}
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-        };
+        final GPSListener gps = new GPSListener(db, mMap, save);
         try{
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,60000,10,mLocationListener);
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,10,mLocationListener);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,60000,10,gps);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,10,gps);
         }catch(SecurityException ex){}
     }
 }
