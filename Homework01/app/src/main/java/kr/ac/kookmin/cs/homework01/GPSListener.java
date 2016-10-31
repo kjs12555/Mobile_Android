@@ -10,6 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class GPSListener implements LocationListener {
     SQLiteDatabase db;
     GoogleMap mMap;
     ArrayList<LatLng> save;
-    PolylineOptions polylineOptions;
+    PolylineOptions polylineOption;
 
     GPSListener(SQLiteDatabase db, GoogleMap mMap, ArrayList<LatLng> save){
         this.db = db;
@@ -31,11 +32,11 @@ public class GPSListener implements LocationListener {
     }
 
     public void drawPolyline(){
-        polylineOptions = new PolylineOptions();
-        polylineOptions.color(Color.RED);
-        polylineOptions.width(5);
-        polylineOptions.addAll(save);
-        mMap.addPolyline(polylineOptions);
+        polylineOption = new PolylineOptions();
+        polylineOption.color(Color.RED);
+        polylineOption.width(5);
+        polylineOption.addAll(save);
+        mMap.addPolyline(polylineOption);
     }
 
     public void onLocationChanged(Location location) {

@@ -29,9 +29,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     DBHelper test;
     SQLiteDatabase db;
     ArrayList<LatLng> save = new ArrayList<LatLng>();
-    PolylineOptions polylineOptions;
     GoogleMap mMap;
-
+    GPSListener gps;
 
     public void initialize(){
         Cursor rs = db.rawQuery("select * from Location;", null);
@@ -39,15 +38,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addCircle(new CircleOptions().center(new LatLng(rs.getDouble(0),rs.getDouble(1))).radius(10).strokeColor(Color.RED).fillColor(Color.BLUE));
             save.add(new LatLng(rs.getDouble(0), rs.getDouble(1)));
         }
-        this.drawPolyline();
-    }
-
-    public void drawPolyline(){
-        polylineOptions = new PolylineOptions();
-        polylineOptions.color(Color.RED);
-        polylineOptions.width(5);
-        polylineOptions.addAll(save);
-        mMap.addPolyline(polylineOptions);
+        gps.drawPolyline();
     }
 
     @Override
@@ -57,7 +48,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
     @Override
@@ -65,7 +55,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         if(test==null)test = new DBHelper(MapsActivity.this, "test_db", null, 1);
         db = test.getWritableDatabase();
-        this.initialize();
+        gps = new GPSListener(db, mMap, save);
+        initialize();
 
         if(save.size()!=0){
             mMap.moveCamera(CameraUpdateFactory.newLatLng(save.get(0)));
@@ -76,7 +67,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Toast.makeText(this, "DB에 있는 정보의 수 : "+Integer.toString(save.size()), Toast.LENGTH_SHORT).show();
 
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        final GPSListener gps = new GPSListener(db, mMap, save);
         try{
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,60000,10,gps);
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,10,gps);
