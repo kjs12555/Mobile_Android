@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
     Button input;
     Button input_com;
     EditText tmp_data;
-    InputData<Integer, String> tmp = new InputData<Integer, String>();
-    TextView input_int;
-    TextView input_String;
+    InputData<Integer, String> tmp = new InputData<>();
+    TextView Text_T;
+    TextView Text_V;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         input = (Button) findViewById(R.id.button);
         input_com = (Button) findViewById(R.id.button2);
         tmp_data= (EditText) findViewById(R.id.editText);
-        input_int = (TextView) findViewById(R.id.textView3);
-        input_String = (TextView) findViewById(R.id.textView5);
+        Text_T = (TextView) findViewById(R.id.textView3);
+        Text_V = (TextView) findViewById(R.id.textView5);
         input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,20 +50,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     class InputData<T,V>{
-        List<T> arr_integer = new LinkedList<T>();
-        List<V> arr_string = new LinkedList<V>();
+        List<T> arr_T = new LinkedList<T>();
+        List<V> arr_V = new LinkedList<V>();
         void input_T(T input){
-            arr_integer.add(input);
+            arr_T.add(input);
+            tmp_data.setText("");
         }
         void input_V(V input){
-            arr_string.add(input);
+            arr_V.add(input);
+            tmp_data.setText("");
         }
         void show(){
-            for(V a : arr_string){
-                input_String.setText(input_String.getText().toString()+" "+a);
+            for(V a : arr_V){
+                Text_V.setText(Text_V.getText().toString()+" "+a.toString());
             }
-            for(T a : arr_integer){
-                input_int.setText(input_int.getText().toString()+" "+a.toString());
+            for(T a : arr_T){
+                Text_T.setText(Text_T.getText().toString()+" "+a.toString());
             }
         }
     }
