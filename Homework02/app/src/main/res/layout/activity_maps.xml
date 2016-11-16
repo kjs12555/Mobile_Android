@@ -1,0 +1,154 @@
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/tabhost">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tab1">
+                <RelativeLayout
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        tools:context="kr.ac.kookmin.cs.homework02.kr.ac.kookmin.cs.homework02.MapsActivity"
+                        android:layout_alignParentLeft="true" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:inputType="textMultiLine"
+                        android:ems="10"
+                        android:layout_below="@+id/map"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="57dp"
+                        android:id="@+id/logEditText"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:hint="Your Log Here"
+                        android:singleLine="false"
+                        android:selectAllOnFocus="false"
+                        android:layout_height="150dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_below="@+id/map"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="11dp" />
+
+                    <TextView
+                        android:text="Division"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/spinner"
+                        android:layout_toLeftOf="@+id/spinner"
+                        android:layout_toStartOf="@+id/spinner"
+                        android:id="@+id/textView" />
+
+                    <TextView
+                        android:text="X : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/spinner"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView2" />
+
+                    <TextView
+                        android:text="Y :"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/textView"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/textView2"
+                        android:layout_toRightOf="@+id/textView2"
+                        android:layout_toEndOf="@+id/textView2"
+                        android:id="@+id/latitude" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/textView3"
+                        android:layout_toRightOf="@+id/textView2"
+                        android:layout_toEndOf="@+id/textView2"
+                        android:id="@+id/longitude" />
+
+                    <Button
+                        android:text="Location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/map"
+                        android:layout_toLeftOf="@+id/textView"
+                        android:layout_toStartOf="@+id/textView"
+                        android:layout_marginRight="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:id="@+id/location" />
+
+                    <Button
+                        android:text="Submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/submit" />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/tab2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:id="@+id/textStatistics"
+                    android:layout_weight="0.83" />
+
+                <Button
+                    android:text="Statistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onClickedStatistics"
+                    android:id="@+id/btnStatistics" />
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</TabHost>
