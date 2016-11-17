@@ -3,7 +3,6 @@ package kr.ac.kookmin.cs.homework02;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
@@ -25,7 +24,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
@@ -33,7 +31,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     DBHelper test;
     SQLiteDatabase db;
-    ArrayList<LatLng> save = new ArrayList<LatLng>();
     GoogleMap mMap;
     LocationManager currentLocation;
     TextView textLatitude;
@@ -49,7 +46,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     GPSListener gps;
     ArrayList<saveClass> saveData;
     TabHost tabHost;
-    Button statistics;
     TextView textStatistics;
     class saveClass{
         double x;
@@ -95,14 +91,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Toast.makeText(context, "통계가 작성되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
-    public void drawPolyline(){
-        PolylineOptions polylineOption = new PolylineOptions();
-        polylineOption.color(Color.RED);
-        polylineOption.width(5);
-        polylineOption.addAll(save);
-        mMap.addPolyline(polylineOption);
-    }
-
     public void initialize(){
         saveData = new ArrayList<saveClass>();
         Cursor rs = db.rawQuery("select * from Logger;", null);
@@ -112,7 +100,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(markerOptions).showInfoWindow();
             saveData.add(tmpData);
         }
-        drawPolyline();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.610215, 126.997202)));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
         mMap.animateCamera(zoom);
